@@ -77,13 +77,41 @@ Include everything from BASIC plus:
      * "Check Google: '도서관에서 만나자'"
      * "Check Google: '수업이 몇 시에 끝나?'"
    - Flag phrases that seem too textbook-like
+   - Note, do not report that "google checks pass" or similar, make factual statement as to the extent of the search "Unlikely that google search needed"
 
-9. Natural Progression Check
-   - Verify vocabulary is from vocabulary-tracker.md
-   - Check grammar matches expected chapter level
-   - Ensure no advanced grammar accidentally used
+9. Story Consistency Check
+   CRITICAL: Extract and verify logical consistency:
+   
+   Time consistency:
+   - List all time references (수업 끝나는 시간, 만나는 시간, etc.)
+   - Create timeline and check for impossibilities
+   - Example check: "If 지은's class ends at 3pm and 민수's at 4pm, they cannot meet at 3pm"
+   
+   Location tracking:
+   - List where each character is throughout the chapter
+   - Verify travel time logic (can't instantly move from 연구실 to CERN)
+   
+   Character knowledge:
+   - Track what each character should know at this point
+   - Flag if 하나 uses advanced terms she hasn't learned
+   - Verify Michael's Korean level is consistent
+   
+   Factual consistency:
+   - List all facts mentioned (room numbers, building names, menu items)
+   - Check against previous chapters if available
+   - Flag any contradictions
+   
+   Output specific errors like:
+   - "TIMELINE ERROR: 민수 cannot meet at 15:00 if class ends at 16:00"
+   - "LOCATION ERROR: 준호 appears in lab (line 23) and CERN (line 25) simultaneously"
+   - "CHARACTER ERROR: 하나 uses term 'systematic uncertainty' but hasn't learned it yet"
 
-10. Comprehensive Scoring
+10. Natural Progression Check
+    - Verify vocabulary is from vocabulary-tracker.md
+    - Check grammar matches expected chapter level
+    - Ensure no advanced grammar accidentally used
+
+11. Comprehensive Scoring
     Rate based on Section 12 "Quality Score Rubric":
     - Particles (0-10)
     - Dialogue (0-10)  

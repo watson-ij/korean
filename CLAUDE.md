@@ -146,24 +146,24 @@ Stories should reward re-reading:
 - Conference abstract deadline rush
 - Teaching quantum mechanics TA
 
-### Act 2 (Ch 9-16): International Collaboration
-- Preparing for collaboration meeting
-- Analysis blessing process stress
-- CERN trip planning (visa, logistics)
-- Working at CERN (시차, 식사, 문화)
-- Presenting at collaboration meeting
-- Detector upgrade discussions
-- Paper draft with 3000 authors
-- Korean HEP workshop
+### Act 2 (Ch 9-16): Split Narratives
+- **Seoul storyline**: Min-su's analysis breakthrough, Ha-na's first real results
+- **CERN storyline**: Jun-ho goes to CERN for 3 months
+  - Chapter 11: Jun-ho's arrival at CERN, finding apartment in Meyrin
+  - Chapter 13: Working in the detector hall, international colleagues
+  - Chapter 15: Weekend trip to Chamonix with other Korean physicists
+- **Connecting scenes**: Weekly Zoom meetings where both storylines merge
+- Korean HEP workshop where everyone reunites
+- Michael's improving Korean creates natural moments (not forced every chapter)
 
 ### Act 3 (Ch 17-25): Career & Discovery
-- 준호's thesis defense preparation
-- Anomaly in data (excitement then systematic)
+- Jun-ho returns with job offers
+- Possible anomaly in data (excitement then systematic)
+- Min-su considers CERN trip for collaboration meeting
+- Ji-eun's detector installed at CERN
 - Conference presentation (ICHEP/Moriond)
 - Postdoc applications (CERN, Fermilab, KEK)
-- Grid computing struggles
-- Final analysis results
-- Job decisions (staying in HEP?)
+- Multiple paths: Jun-ho → CERN postdoc, Min-su → considering industry, Ha-na → PhD decision
 - Next generation experiment planning
 
 ## Chapter Structure Template
@@ -172,11 +172,12 @@ Stories should reward re-reading:
    - Natural dialogue
    - Description and narration
    - 7-10 new vocabulary items max
-   - Include natural moments where Michael's language level creates organic situations:
-     * Misunderstandings that get resolved through context
-     * Moments where others laugh and he (and maybe the reader) doesn't quite know why
-     * Successful communications that show his progress
-     * Cultural-linguistic confusion that any non-native would experience
+   - **Story variety**: 
+     * Not every chapter needs Michael
+     * Some chapters focus on Jun-ho at CERN (different vocabulary: European life, international English-Korean code-switching)
+     * Some chapters are Min-su/Ha-na focused (analysis problems, Korean academic life)
+     * Zoom meetings connect storylines naturally
+     * Michael appears when it serves the story, not as a teaching device
 
 2. **연습 문제**:
    - 맞아요? 틀려요? (8 questions)
@@ -199,6 +200,11 @@ Before finalizing each chapter:
 6. Is difficulty appropriate for chapter number?
 7. If Michael appears, are his language moments organic and realistic?
 8. Will re-readers discover new layers of understanding?
+9. **Story consistency verified**:
+   - Timeline makes logical sense (no meeting at 3 if class ends at 4)
+   - Character locations are possible
+   - Character knowledge is appropriate (Ha-na doesn't know advanced things yet)
+   - Facts remain consistent (room numbers, equipment names)
 
 ## Custom Commands Guide
 

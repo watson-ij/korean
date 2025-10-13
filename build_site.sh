@@ -23,15 +23,20 @@ OUTPUT_DIR="site"
 mkdir -p "$OUTPUT_DIR/chapters"
 mkdir -p "$OUTPUT_DIR/colloquia"
 mkdir -p "$OUTPUT_DIR/sermones"
+mkdir -p "$OUTPUT_DIR/annotated"
+mkdir -p "$OUTPUT_DIR/workbooks"
 mkdir -p "$OUTPUT_DIR/css"
+
+# Download a nice CSS framework (Sakura - clean and minimal)
+echo -e "${BLUE}Setting up CSS...${NC}"
 
 # Choose theme (uncomment the one you want)
 # THEME="sakura.css"              # Default light
 # THEME="sakura-dark.css"         # Dark theme
 # THEME="sakura-dark-solarized.css" # Dark solarized
- THEME="sakura-earthly.css"      # Earthly (warm light)
+# THEME="sakura-earthly.css"      # Earthly (warm light)
 # THEME="sakura-vader.css"        # Vader (high contrast dark)
-# THEME="sakura-dark.css"           # Using dark as default
+THEME="sakura-dark.css"           # Using dark as default
 
 if [ ! -f "$OUTPUT_DIR/css/sakura.css" ]; then
     echo -e "${BLUE}Downloading $THEME theme...${NC}"
@@ -56,12 +61,14 @@ convert_with_nav() {
     local title=$3
     local prev=$4
     local next=$5
+    local annotated_link=$6
     
     # Create navigation links
     local nav_links=""
     [ -n "$prev" ] && nav_links="<a href='$prev'>← Previous</a> | "
     nav_links="$nav_links<a href='../index.html'>Home</a>"
     [ -n "$next" ] && nav_links="$nav_links | <a href='$next'>Next →</a>"
+    [ -n "$annotated_link" ] && nav_links="$nav_links | <a href='$annotated_link'>📝 Study Version</a>"
     
     pandoc "$input" \
         --standalone \
@@ -96,6 +103,7 @@ for i in "${!chapters[@]}"; do
         num=$(basename "$chapter" .md | sed 's/chapter-//')
         prev=""
         next=""
+        annotated=""
         
         # Determine previous/next links
         if [ $i -gt 0 ]; then
@@ -107,9 +115,66 @@ for i in "${!chapters[@]}"; do
             next="chapter-${next_num}.html"
         fi
         
+        # Check if annotated version exists
+        if [ -f "annotated/chapter-${num}-annotated.md" ]; then
+            annotated="../annotated/chapter-${num}-annotated.html"
+        fi
+        
         convert_with_nav "$chapter" "$OUTPUT_DIR/chapters/chapter-${num}.html" \
-            "Chapter $num" "$prev" "$next"
+            "Chapter $num" "$prev" "$next" "$annotated"
         echo -e "${GREEN}✓${NC} Chapter $num"
+    fi
+done
+
+# Build annotated pages
+echo -e "${BLUE}Converting annotated versions...${NC}"
+for file in annotated/chapter-*-annotated.md; do
+    if [ -f "$file" ]; then
+        num=$(basename "$file" -annotated.md | sed 's/chapter-//')
+        
+        # Create with link back to original
+        pandoc "$file" \
+            --standalone \
+            --metadata title="Chapter $num - Study Version" \
+            --css="../css/sakura.css" \
+            -H <(echo "<style>
+                .annotation { background: rgba(255, 255, 0, 0.2); padding: 2px 4px; border-radius: 3px; }
+                .grammar-note { color: #0066cc; font-style: italic; }
+                .particle { background: rgba(100, 200, 255, 0.2); padding: 1px 3px; border-radius: 2px; }
+                .vocab { background: rgba(144, 238, 144, 0.2); padding: 2px 4px; border-radius: 3px; }
+                .warning { background: rgba(255, 200, 200, 0.3); padding: 4px; margin: 4px 0; border-left: 3px solid #ff6b6b; }
+                nav.study-nav { background: #f9f9f9; padding: 1em; margin-bottom: 2em; border-radius: 5px; border: 2px solid #4CAF50; }
+            </style>") \
+            -B <(echo "<nav class='study-nav'>
+                <strong>📚 Study Mode</strong> | 
+                <a href='../chapters/chapter-${num}.html'>📖 Back to Original</a> | 
+                <a href='../index.html'>🏠 Home</a>
+                </nav>
+                <div style='background: #e8f5e9; padding: 10px; border-radius: 5px; margin-bottom: 20px;'>
+                    💡 <strong>Study Version:</strong> This page includes grammar explanations, vocabulary notes, and learning tips.
+                </div>") \
+            -o "$OUTPUT_DIR/annotated/chapter-${num}-annotated.html"
+        echo -e "${GREEN}✓${NC} Chapter $num annotated"
+    fi
+done
+
+# Build workbook pages
+echo -e "${BLUE}Converting workbooks...${NC}"
+for file in workbooks/chapter-*-workbook.md; do
+    if [ -f "$file" ]; then
+        num=$(basename "$file" -workbook.md | sed 's/chapter-//')
+        
+        pandoc "$file" \
+            --standalone \
+            --metadata title="Chapter $num - Workbook" \
+            --css="../css/sakura.css" \
+            -B <(echo "<nav>
+                <a href='../chapters/chapter-${num}.html'>📖 Original Chapter</a> | 
+                <a href='../annotated/chapter-${num}-annotated.html'>📝 Study Version</a> | 
+                <a href='../index.html'>🏠 Home</a>
+                </nav>") \
+            -o "$OUTPUT_DIR/workbooks/chapter-${num}-workbook.html"
+        echo -e "${GREEN}✓${NC} Chapter $num workbook"
     fi
 done
 
@@ -167,6 +232,33 @@ for file in colloquia/colloquium-*.md; do
         echo "- [Colloquium $num: $title](colloquia/colloquium-${num}.html)" >> "$OUTPUT_DIR/index.md"
     fi
 done
+
+cat >> "$OUTPUT_DIR/index.md" << 'EOF'
+
+### 📝 Study Materials
+Annotated versions and workbooks for deeper learning:
+
+EOF
+
+# Add annotated chapter links
+for file in annotated/chapter-*-annotated.md; do
+    if [ -f "$file" ]; then
+        num=$(basename "$file" -annotated.md | sed 's/chapter-//')
+        echo "- [Chapter $num - Study Version](annotated/chapter-${num}-annotated.html)" >> "$OUTPUT_DIR/index.md"
+    fi
+done
+
+# Add workbook links if any exist
+if ls workbooks/chapter-*-workbook.md 1> /dev/null 2>&1; then
+    echo "" >> "$OUTPUT_DIR/index.md"
+    echo "### 📓 Workbooks" >> "$OUTPUT_DIR/index.md"
+    for file in workbooks/chapter-*-workbook.md; do
+        if [ -f "$file" ]; then
+            num=$(basename "$file" -workbook.md | sed 's/chapter-//')
+            echo "- [Chapter $num - Practice Workbook](workbooks/chapter-${num}-workbook.html)" >> "$OUTPUT_DIR/index.md"
+        fi
+    done
+fi
 
 cat >> "$OUTPUT_DIR/index.md" << 'EOF'
 

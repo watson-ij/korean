@@ -4,6 +4,7 @@
 ```
 korean-natural-method/
 ├── CLAUDE.md
+├── vocabulary-tracker.md           # NOW INCLUDES BASELINE PREREQUISITES
 ├── validation/
 │   ├── korean-validation.md      # The validation rules/methods
 │   ├── validation-command.md      # This file
@@ -12,6 +13,31 @@ korean-natural-method/
 ├── chapters/
 └── ...
 ```
+
+## Important: Baseline Prerequisites Approach (Updated 2025-10-22)
+
+**Target Audience:** Beginner-Intermediate Korean learners
+
+**Validation Philosophy:**
+This project assumes learners have **baseline Korean knowledge** before starting Chapter 1. The vocabulary-tracker.md now includes a comprehensive "Baseline Prerequisites" section (~300 common words) that should NOT be flagged as vocabulary violations.
+
+**What to Validate:**
+- ✅ **Domain-specific vocabulary** (particle physics, research lab context) - must be introduced in chapters
+- ✅ **Grammar progression** - must follow CLAUDE.md strictly
+- ✅ **Story consistency** - timeline, character knowledge, locations
+- ✅ **Korean naturalness** - particles, word order, formality
+
+**What NOT to Flag:**
+- ❌ **Baseline conversation words** - 안녕, 네, 응, 괜찮아, etc.
+- ❌ **Common pronouns** - 나, 저, 우리, 너, 누구, etc.
+- ❌ **Basic particles** - 은/는, 이/가, 을/를, 에, 에서, 도, etc.
+- ❌ **Essential verbs** - 하다, 가다, 오다, 있다, 먹다, etc. (see full list in vocab tracker)
+- ❌ **Computer/office basics** - 컴퓨터, 키보드, 화면, 책상, etc.
+- ❌ **Numbers and time** - 시, 분, 반, 1-10, days of week, etc.
+
+**When in doubt:** Check vocabulary-tracker.md → Baseline Prerequisites section first!
+
+---
 
 ## 13. validate_korean
 
@@ -90,6 +116,9 @@ Include everything from BASIC plus:
 
 9. Natural Progression Check
    - Verify vocabulary is from vocabulary-tracker.md
+     * Check against BOTH Baseline Prerequisites AND chapter-specific vocabulary
+     * Baseline words (~300 common words) are assumed known - do NOT flag as errors
+     * Only flag domain-specific words not yet introduced in chapters
    - Check grammar matches expected chapter level
    - Ensure no advanced grammar accidentally used
 

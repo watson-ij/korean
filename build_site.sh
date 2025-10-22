@@ -295,9 +295,11 @@ rm -f "$OUTPUT_DIR/index.md" "$OUTPUT_DIR/nav.html"
 echo -e "${GREEN}✅ Site built successfully!${NC}"
 echo -e "${BLUE}Open ${OUTPUT_DIR}/index.html in your browser to view.${NC}"
 
-# Optional: Open in browser
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    open "$OUTPUT_DIR/index.html"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    xdg-open "$OUTPUT_DIR/index.html" 2>/dev/null
+# Optional: Open in browser (skip in CI environment)
+if [ -z "$CI" ]; then
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        open "$OUTPUT_DIR/index.html"
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        xdg-open "$OUTPUT_DIR/index.html" 2>/dev/null || true
+    fi
 fi

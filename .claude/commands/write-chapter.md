@@ -3,6 +3,12 @@ description: Write a complete chapter following the planned structure
 signature: write-chapter <chapter_number>
 ---
 
+FIRST, check if plan-chapter-[number].md exists:
+
+IF plan-chapter-[number].md DOES NOT EXIST:
+  Run: /plan_next_chapter [number]
+  Wait for plan to be created
+
 Using plan-chapter-[chapter_number].md and following the structure in CLAUDE.md:
 
 1. Write the 이야기 section:

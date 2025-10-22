@@ -1,0 +1,31 @@
+# Generated EPUB files
+*.epub
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# uv
+.uv/
+uv.lock
+
+# Site/build output
+site/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

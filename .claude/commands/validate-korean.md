@@ -106,10 +106,27 @@ Include everything from BASIC plus:
    - "LOCATION ERROR: 준호 appears in lab (line 23) and CERN (line 25) simultaneously"
    - "CHARACTER ERROR: 하나 uses term 'systematic uncertainty' but hasn't learned it yet"
 
-10. Natural Progression Check
+10. Grammar Progression Check
+    - Load grammar progression plan from CLAUDE.md
+    - **Distinguish between:**
+      * **Focus grammar**: Main teaching point, must be contextually clear
+      * **Natural appearances**: Advanced patterns used naturally in dialogue
+    - **Check against revised progression:**
+      * Ch 1-2: Present tense, basic particles, 있다/없다, basic questions
+      * Ch 3: Past tense (focus), ㄹ게요, 겠다, 도 돼요, 잖아 (natural)
+      * Ch 4-6: Future, 고 싶다, 고 있다, ㄹ 수 있다/없다, 아/어 보다
+      * Ch 7-10: 아/어서, 니까, 지만, 는데, 아/어야 하다, 주다/받다
+      * Ch 11-15: 으면, 다고/라고 (focus), 것 같다, 려고
+      * Ch 16-20+: Passive/causative, advanced patterns
+    - **Flag problematic usage:**
+      * Grammar focus appearing before its chapter (Ch 2 focusing on past tense)
+      * Advanced patterns without context (passive voice in Ch 3 with no setup)
+      * Overuse of advanced patterns (10+ instances of 다고 before Ch 11)
+    - **Allow natural usage:**
+      * Common expressions (힘들었겠다, 다고 했지, etc.)
+      * 1-2 instances of advanced patterns if contextually clear
+      * Honorifics throughout (시) when addressing professors
     - Verify vocabulary is from vocabulary-tracker.md
-    - Check grammar matches expected chapter level
-    - Ensure no advanced grammar accidentally used
 
 11. Comprehensive Scoring
     Rate based on Section 12 "Quality Score Rubric":

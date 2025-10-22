@@ -99,40 +99,57 @@ Stories should reward re-reading:
 
 ## Grammar Progression Plan
 
-### Chapters 1-5: Foundation
-- Present tense (아/어요)
-- Basic particles (은/는, 이/가, 을/를, 에, 에서, 와/과)
-- Existence/Location (있다/없다)
-- Basic questions (뭐, 어디, 언제, 누구, 왜, 어떻게)
-- Numbers, time
+**Note on progression:** Some grammar patterns appear naturally in dialogue before being formally "taught" as a focus. The distinction is between grammar that students should actively produce vs. patterns they encounter contextually.
 
-### Chapters 6-10: Past & Future
-- Past tense (았/었어요)
+### Chapters 1-2: Foundation
+- Present tense (아/어요, 해요)
+- Basic particles (은/는, 이/가, 을/를, 에, 에서, 도)
+- Existence/Location (있다/없다)
+- Basic questions (뭐, 어디, 누구)
+- Numbers, time (basic)
+
+### Chapter 3: Past Tense Introduction
+- **Focus:** Past tense (았/었어요)
+- Future intention (ㄹ게요) - natural in context
+- Inference (겠다) - appears in empathy expressions
+- Permission (도 돼요)
+- Shared knowledge (잖아)
+
+### Chapters 4-6: Expanding Tenses
 - Future (ㄹ 거예요, ㄹ까요)
 - Want to (고 싶다)
+- Progressive (고 있다)
 - Can/Cannot (ㄹ 수 있다/없다)
-- Have to (아/어야 하다)
-
-### Chapters 11-15: Connections
-- Because (아/어서, 니까)
-- But/And (지만, 고)
-- If (으면)
-- While/When (ㄹ 때, 면서)
 - Try doing (아/어 보다)
 
-### Chapters 16-20: Intermediate
-- Indirect speech (다고, 라고, 냐고)
-- Passive/Causative
-- Giving/Receiving (주다, 받다, 드리다)
-- Honorifics (시)
-- Progressive (고 있다)
+### Chapters 7-10: Connections & Reasons
+- Because (아/어서, 니까)
+- But/And (지만, 고, 는데)
+- Have to (아/어야 하다)
+- While/When (ㄹ 때, 면서)
+- Giving/Receiving (주다, 받다)
 
-### Chapters 21-25: Advanced Patterns
+### Chapters 11-15: Complex Sentences
+- If (으면)
+- Indirect speech (다고, 라고, 냐고) - formal introduction (already appearing naturally)
 - Seems like (것 같다)
-- Experience (ㄴ 적이 있다)
 - Intention (려고)
-- As soon as (자마자)
+- Experience (ㄴ 적이 있다)
+
+### Chapters 16-20: Advanced Patterns
+- Honorifics (시) - formal focus (used naturally throughout)
+- Passive/Causative
 - Even though (는데도)
+- As soon as (자마자)
+- Despite (에도 불구하고)
+- Nominalizations (는 것)
+
+### Chapters 21-25: Nuanced Expression
+- Regret (ㄹ 걸 그랬다)
+- Conjecture (나 보다, 모양이다)
+- Advanced connectors (더니, 다가)
+- Reported speech variations
+- Literary patterns
 
 ## Story Arc Overview
 

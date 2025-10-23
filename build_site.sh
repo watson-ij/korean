@@ -45,7 +45,7 @@ fi
 
 # Create a simple navigation template
 cat > "$OUTPUT_DIR/nav.html" << 'EOF'
-<nav style="background: #f0f0f0; padding: 1em; margin-bottom: 2em; border-radius: 5px;">
+<nav style="background: #2a2a2a; padding: 1em; margin-bottom: 2em; border-radius: 5px; border: 1px solid #444;">
     <a href="index.html">📚 Home</a> |
     <a href="chapters.html">📖 Chapters</a> |
     <a href="colloquia.html">💬 Colloquia</a> |
@@ -83,10 +83,11 @@ convert_with_nav() {
         --metadata title="$title" \
         --css="../css/sakura.css" \
         -H <(echo "<style>
-            nav { background: #f0f0f0; padding: 1em; margin-bottom: 2em; border-radius: 5px; }
+            nav { background: #2a2a2a; padding: 1em; margin-bottom: 2em; border-radius: 5px; border: 1px solid #444; }
             nav a { margin: 0 0.5em; }
             .chapter-nav { text-align: center; padding: 1em; margin: 2em 0; }
-            .chapter-nav a { margin: 0 1em; padding: 0.5em 1em; background: #e0e0e0; border-radius: 3px; text-decoration: none; }
+            .chapter-nav a { margin: 0 1em; padding: 0.5em 1em; background: #3a3a3a; border: 1px solid #555; border-radius: 3px; text-decoration: none; color: #ddd; }
+            .chapter-nav a:hover { background: #4a4a4a; }
         </style>") \
         -B <(echo "<nav><a href='../index.html'>📚 Home</a> | <a href='../chapters.html'>📖 All Chapters</a></nav>") \
         -B <(echo "<div class='chapter-nav'>$nav_links</div>") \
@@ -138,19 +139,19 @@ for file in annotated/chapter-*-annotated.md; do
             --metadata title="Chapter $num - Study Version" \
             --css="../css/sakura.css" \
             -H <(echo "<style>
-                .annotation { background: rgba(255, 255, 0, 0.2); padding: 2px 4px; border-radius: 3px; }
-                .grammar-note { color: #0066cc; font-style: italic; }
-                .particle { background: rgba(100, 200, 255, 0.2); padding: 1px 3px; border-radius: 2px; }
-                .vocab { background: rgba(144, 238, 144, 0.2); padding: 2px 4px; border-radius: 3px; }
-                .warning { background: rgba(255, 200, 200, 0.3); padding: 4px; margin: 4px 0; border-left: 3px solid #ff6b6b; }
-                nav.study-nav { background: #f9f9f9; padding: 1em; margin-bottom: 2em; border-radius: 5px; border: 2px solid #4CAF50; }
+                .annotation { background: rgba(255, 255, 0, 0.15); padding: 2px 4px; border-radius: 3px; }
+                .grammar-note { color: #66b3ff; font-style: italic; }
+                .particle { background: rgba(100, 200, 255, 0.15); padding: 1px 3px; border-radius: 2px; }
+                .vocab { background: rgba(144, 238, 144, 0.15); padding: 2px 4px; border-radius: 3px; }
+                .warning { background: rgba(255, 100, 100, 0.2); padding: 4px; margin: 4px 0; border-left: 3px solid #ff6b6b; }
+                nav.study-nav { background: #2a2a2a; padding: 1em; margin-bottom: 2em; border-radius: 5px; border: 2px solid #4CAF50; }
             </style>") \
             -B <(echo "<nav class='study-nav'>
                 <strong>📚 Study Mode</strong> | 
                 <a href='../chapters/chapter-${num}.html'>📖 Back to Original</a> | 
                 <a href='../index.html'>🏠 Home</a>
                 </nav>
-                <div style='background: #e8f5e9; padding: 10px; border-radius: 5px; margin-bottom: 20px;'>
+                <div style='background: #2a3d2a; padding: 10px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #4CAF50;'>
                     💡 <strong>Study Version:</strong> This page includes grammar explanations, vocabulary notes, and learning tips.
                 </div>") \
             -o "$OUTPUT_DIR/annotated/chapter-${num}-annotated.html"

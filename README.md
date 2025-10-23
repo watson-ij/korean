@@ -153,7 +153,10 @@ When you run `/auto_fix`, it automatically:
 - `/generate_workbook N` - Interactive exercises
 
 ### Building Website
-- `./build_site.sh` - Creates HTML site with navigation
+- `./build_site.sh` - Creates HTML site with navigation and **interactive quizzes**
+  - True/False questions now have clickable radio buttons
+  - Get immediate feedback: ✓ Correct or ✗ Try again
+  - All answers stored in `quiz-answers.json`
 
 ## Tips for Learning
 

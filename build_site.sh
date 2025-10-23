@@ -54,7 +54,7 @@ cat > "$OUTPUT_DIR/nav.html" << 'EOF'
 </nav>
 EOF
 
-# Function to convert markdown to HTML with navigation
+# Function to convert markdown to HTML with navigation and interactive quizzes
 convert_with_nav() {
     local input=$1
     local output=$2
@@ -62,14 +62,21 @@ convert_with_nav() {
     local prev=$4
     local next=$5
     local annotated_link=$6
-    
+    local chapter_num=$7
+
     # Create navigation links
     local nav_links=""
     [ -n "$prev" ] && nav_links="<a href='$prev'>← Previous</a> | "
     nav_links="$nav_links<a href='../index.html'>Home</a>"
     [ -n "$next" ] && nav_links="$nav_links | <a href='$next'>Next →</a>"
     [ -n "$annotated_link" ] && nav_links="$nav_links | <a href='$annotated_link'>📝 Study Version</a>"
-    
+
+    # Read quiz answers for this chapter
+    local answers=""
+    if [ -f "quiz-answers.json" ] && [ -n "$chapter_num" ]; then
+        answers=$(cat quiz-answers.json)
+    fi
+
     pandoc "$input" \
         --standalone \
         --metadata title="$title" \
@@ -88,11 +95,133 @@ convert_with_nav() {
             .chapter-nav { text-align: center; padding: 1em; margin: 2em 0; }
             .chapter-nav a { margin: 0 1em; padding: 0.5em 1em; background: #3a3a3a; border: 1px solid #555; border-radius: 3px; text-decoration: none; color: #ddd; }
             .chapter-nav a:hover { background: #4a4a4a; }
+            .quiz-question { margin: 1em 0; padding: 0.8em; background: #2a2a2a; border-radius: 5px; border: 1px solid #444; }
+            .quiz-option { margin: 0.5em 0; cursor: pointer; }
+            .quiz-option input { margin-right: 0.5em; cursor: pointer; }
+            .quiz-option label { cursor: pointer; }
+            .quiz-feedback { margin-top: 0.5em; padding: 0.5em; border-radius: 3px; font-weight: bold; }
+            .correct { background: #2d4a2d; color: #90ee90; border: 1px solid #4CAF50; }
+            .incorrect { background: #4a2d2d; color: #ff8888; border: 1px solid #ff6b6b; }
         </style>") \
         -B <(echo "<nav><a href='../index.html'>📚 Home</a> | <a href='../chapters.html'>📖 All Chapters</a></nav>") \
         -B <(echo "<div class='chapter-nav'>$nav_links</div>") \
         -A <(echo "<div class='chapter-nav'>$nav_links</div>") \
         -o "$output"
+
+    # Add interactive quiz JavaScript if answers exist
+    if [ -n "$chapter_num" ] && [ -f "quiz-answers.json" ]; then
+        add_quiz_interactivity "$output" "$chapter_num"
+    fi
+}
+
+# Function to add interactive quiz functionality to HTML
+add_quiz_interactivity() {
+    local html_file=$1
+    local chapter_num=$2
+
+    # Create temporary file with quiz JavaScript
+    cat >> "$html_file" << 'QUIZ_SCRIPT_END'
+<script>
+// Quiz answers loaded from quiz-answers.json
+const quizAnswers = QUIZ_ANSWERS_PLACEHOLDER;
+
+// Initialize quiz when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    convertTrueFalseQuestions();
+});
+
+function convertTrueFalseQuestions() {
+    // Find the True/False section
+    const headers = document.querySelectorAll('h3');
+    let trueFalseSection = null;
+
+    for (let header of headers) {
+        if (header.textContent.includes('맞아요? 틀려요?') || header.textContent.includes('True or False')) {
+            trueFalseSection = header.parentElement;
+            break;
+        }
+    }
+
+    if (!trueFalseSection) return;
+
+    // Find all list items in the True/False section
+    const nextElement = trueFalseSection.querySelector('ol, ul');
+    if (!nextElement) return;
+
+    const questions = nextElement.querySelectorAll('li');
+    const chapterKey = 'chapter-' + document.title.match(/Chapter (\d+)/)?.[1]?.padStart(2, '0');
+    const answers = quizAnswers[chapterKey]?.true_false || [];
+
+    questions.forEach((question, index) => {
+        if (index >= answers.length) return;
+
+        const correctAnswer = answers[index];
+        const questionText = question.textContent.replace(/\s*\(\s*\)\s*$/, '');
+
+        // Create interactive quiz HTML
+        const quizHTML = `
+            <div class="quiz-question">
+                <div style="margin-bottom: 0.5em;">${questionText}</div>
+                <div class="quiz-option">
+                    <input type="radio" id="q${index}_true" name="q${index}" value="true">
+                    <label for="q${index}_true">맞아요 (True)</label>
+                </div>
+                <div class="quiz-option">
+                    <input type="radio" id="q${index}_false" name="q${index}" value="false">
+                    <label for="q${index}_false">틀려요 (False)</label>
+                </div>
+                <div class="quiz-feedback" id="feedback${index}" style="display:none;"></div>
+            </div>
+        `;
+
+        question.innerHTML = quizHTML;
+
+        // Add event listeners for immediate feedback
+        const radios = question.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                checkAnswer(index, this.value === 'true', correctAnswer);
+            });
+        });
+    });
+}
+
+function checkAnswer(questionIndex, userAnswer, correctAnswer) {
+    const feedback = document.getElementById('feedback' + questionIndex);
+    feedback.style.display = 'block';
+
+    if (userAnswer === correctAnswer) {
+        feedback.className = 'quiz-feedback correct';
+        feedback.textContent = '✓ 맞아요! (Correct!)';
+    } else {
+        feedback.className = 'quiz-feedback incorrect';
+        feedback.textContent = '✗ 틀려요. (Incorrect. Try again!)';
+    }
+}
+</script>
+QUIZ_SCRIPT_END
+
+    # Replace placeholder with actual answers
+    if [ -f "quiz-answers.json" ]; then
+        # Read the JSON and escape for sed properly
+        local answers_json=$(cat quiz-answers.json | tr '\n' ' ')
+        # Use python to do the replacement if available, otherwise use sed
+        if command -v python3 &> /dev/null; then
+            python3 << EOF
+import re
+with open('$html_file', 'r', encoding='utf-8') as f:
+    content = f.read()
+with open('quiz-answers.json', 'r', encoding='utf-8') as f:
+    quiz_data = f.read().strip()
+content = content.replace('QUIZ_ANSWERS_PLACEHOLDER', quiz_data)
+with open('$html_file', 'w', encoding='utf-8') as f:
+    f.write(content)
+EOF
+        else
+            # Fallback to sed
+            sed -i "s/QUIZ_ANSWERS_PLACEHOLDER/$answers_json/" "$html_file"
+        fi
+    fi
 }
 
 # Build chapter pages with navigation
@@ -122,7 +251,7 @@ for i in "${!chapters[@]}"; do
         fi
         
         convert_with_nav "$chapter" "$OUTPUT_DIR/chapters/chapter-${num}.html" \
-            "Chapter $num" "$prev" "$next" "$annotated"
+            "Chapter $num" "$prev" "$next" "$annotated" "$num"
         echo -e "${GREEN}✓${NC} Chapter $num"
     fi
 done

@@ -1,0 +1,14 @@
+{
+  "chapter-01": {
+    "true_false": [false, true, false, false, false, true, true, true]
+  },
+  "chapter-02": {
+    "true_false": [false, true, false, false, true, false, true, true]
+  },
+  "chapter-03": {
+    "true_false": [false, true, false, false, true, false, true, true]
+  },
+  "chapter-04": {
+    "true_false": [false, true, false, true, false, true, true, false]
+  }
+}

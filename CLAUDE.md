@@ -3,6 +3,14 @@
 ## Project Overview
 This project creates a series of Korean language learning materials using the natural method approach, inspired by Hans Ørberg's "Lingua Latina per se Illustrata". All content is in Korean from the beginning, with new vocabulary and grammar introduced gradually through context.
 
+## Project Structure
+- **chapters/**: Main chapter markdown files (chapter-01.md, chapter-02.md, etc.)
+- **colloquia/**: Supplementary dialogue materials
+- **annotated/**: Study versions with grammar notes
+- **workbooks/**: Practice exercise supplements
+- **build_site.sh**: Generates static HTML site for GitHub Pages (outputs to site/)
+- **build_epub.py**: Generates EPUB ebook from all materials
+
 ## Teaching Methodology
 
 ### Core Principles

@@ -50,7 +50,8 @@ cat > "$OUTPUT_DIR/nav.html" << 'EOF'
     <a href="chapters.html">📖 Chapters</a> |
     <a href="colloquia.html">💬 Colloquia</a> |
     <a href="sermones.html">📜 Sermones</a> |
-    <a href="vocabulary.html">📝 Vocabulary</a>
+    <a href="vocabulary.html">📝 Vocabulary</a> |
+    <a href="https://github.com/watson-ij/korean" target="_blank">💻 GitHub</a>
 </nav>
 EOF
 
@@ -395,6 +396,7 @@ cat >> "$OUTPUT_DIR/index.md" << 'EOF'
 ### 📚 Resources
 - [Vocabulary Tracker](vocabulary.html)
 - [Study Guide](study-guide.html)
+- [GitHub Repository](https://github.com/watson-ij/korean) - View source, contribute, or report issues
 
 ---
 *Generated: 
